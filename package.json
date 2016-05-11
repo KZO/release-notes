@@ -1,8 +1,11 @@
 {
-  "name": "release-notes",
+  "name": "kzo-release-notes",
   "version": "1.0.0",
   "description": "Automatically create release notes based on github milestones and labels",
   "main": "dist/index.js",
+  "bin": {
+    "kzo-release-notes": "bin/kzo-release-notes"
+  },
   "scripts": {
     "build": "babel lib > dist/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
