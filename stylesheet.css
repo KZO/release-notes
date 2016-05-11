@@ -1,0 +1,26 @@
+
+/*
+ * Override default html5 boilerplate stylesheet that adds the url to the actual
+ * text, which makes sense when "printed" but since this is a clickable PDF,
+ * we do not need to display the URL.
+ */
+@media print {
+  a[href]:after {
+    content: "";
+  }
+}
+
+body {
+  font-size: 11px;
+  line-height: 18px;
+  color: #666;
+  font-family: 'Oxygen', 'Tahoma', sans;
+}
+
+a {
+  color: #337fcc;
+}
+
+h1,h2,h3,h4,h5,h6 {
+  color: #333;
+}

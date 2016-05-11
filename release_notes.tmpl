@@ -1,0 +1,20 @@
+# Release notes for {{ repo }} v{{milestone.title}}
+{{milestone.description}}
+
+## Bugs:
+{{issues.bugs.expression}} {{issues.bugs.length}} bugs were squashed!
+{{#issues.bugs}}
+- [Issue #{{number}}](https://github.com/KZO/Platform/issues/{{number}}): {{title}}
+{{/issues.bugs}}
+
+## Features:
+{{issues.features.expression}} {{issues.features.length}} features were added, including:
+{{#issues.features}}
+- [Issue #{{number}}](https://github.com/KZO/Platform/issues/{{number}}): {{title}}
+{{/issues.features}}
+
+## Improvements:
+{{issues.improvements.expression}} In this release, {{issues.improvements.length}} improvements were implemented, including:
+{{#issues.improvements}}
+- [Issue #{{number}}](https://github.com/KZO/Platform/issues/{{number}}): {{title}}
+{{/issues.improvements}}

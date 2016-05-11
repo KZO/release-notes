@@ -1,0 +1,49 @@
+#!/usr/bin/env node
+
+var releaseNotes = require('../index');
+var program = require('commander');
+var Promise = require('bluebird');
+var gitOrigin = Promise.promisify(require('resolve-git-remote'));
+var fs = require('fs');
+var markdownpdf = require('markdown-pdf');
+var str = require('string-to-stream');
+
+program
+  .option('-m, --milestone <label>', 'Milestone name (e.g.: 4.0.1)')
+  .option('-w, --write [filename]', 'Converts to PDF and writes to disk instead of markdown => stdout  (Default filename: Release-vMILESTONE.pdf)')
+  .option('-s, --status <closed|open>', 'Show milestones where the status is open or closed.  (Default: closed)', 'closed')
+  .option('-r, --repo <reponame>', 'Search milestones belonging to this repo (Defaults to lookup of origin server in current git repo)')
+  .option('-u, --user <username>', 'Specify User or Org repo belongs to (defaults to lookup of origin server in current git repo)')
+  .option('-t, --template <template>', 'Location of mustache template file', fs.readFileSync(__dirname + '/../release_notes.tmpl', 'utf-8'))
+  .parse(process.argv);
+
+if (!program.milestone) {
+  console.log('No milestone provided.  Try --help to see all available options');
+  process.exit(1);
+}
+
+function getUserRepo () {
+  return new Promise((resolve, reject) => {
+    if (!program.user || !program.repo) {
+      gitOrigin().then((url) => resolve({ user: url.split('/')[0], repo: url.split('/')[1] }));
+    } else {
+      resolve({ user: program.user, repo: program.repo });
+    }
+  })
+};
+
+getUserRepo().then((res) => {
+  console.log('Retrieving GitHub milestone and issues...');
+  return releaseNotes({ user: res.user, repo: res.repo, milestone: program.milestone, template: program.template, token: process.env.GITHUB_TOKEN });
+}).then((md) => {
+  if (program.write) {
+    console.log('Generating PDF...');
+    var filename = './Release-v' + program.milestone + '.pdf';
+    str(md)
+      .pipe(markdownpdf({ cssPath: __dirname + '/../stylesheet.css' }))
+      .pipe(fs.createWriteStream(filename))
+      .on('finish', function () {
+        console.log('Done.  Saved to ' + filename);
+      })
+  }
+});
