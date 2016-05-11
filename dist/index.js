@@ -83,7 +83,8 @@ var getIssues = function () {
 
             _context2.next = 3;
             return getRepoIssues({
-              user: user, repo: repo, milestoneData: milestoneData,
+              user: user, repo: repo,
+              milestone: milestoneData,
               state: 'closed',
               per_page: 100
             });
