@@ -32,7 +32,8 @@ var getMilestoneByTitle = function () {
             return getAllMilestones({
               user: user, repo: repo, state: state,
               page: 0,
-              per_page: 100
+              per_page: 100,
+              sort: 'due_date'
             });
 
           case 4:

@@ -1,6 +1,6 @@
 {
   "name": "kzo-release-notes",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Automatically create release notes based on github milestones and labels",
   "main": "dist/index.js",
   "bin": {
