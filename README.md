@@ -1,3 +1,7 @@
+# THIS REPOSITORY IS DEPRECTATED, WILL NOT BE MAINTAINED, AND SHOULD NOT BE USED IN PRODUCTION
+
+---
+
 # kzo-release-notes
 Generates KZO release notes automatically based on our GitHub conventions
 
